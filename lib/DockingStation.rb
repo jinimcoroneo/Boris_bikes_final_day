@@ -11,8 +11,8 @@ class DockingStation
 
   def release_bike
     fail "There are no more bikes available" if empty?
-    fail "Bike is broken, you can't have it!" if @bikes.first.working? == false
-    @bikes.shift    
+    fail "Bike is broken, you can't have it!" if @bikes.first.working == false
+    @bikes.shift
   end
 
   def dock(bike)
@@ -23,16 +23,16 @@ class DockingStation
 
   def report_broken(bike)
     dock(bike)
-    bike.condition = "bad"
+    bike.working = false
   end
 
 private
 
   def full?
-    @bikes.count >= DEFAULT_CAPACITY ? true : false
+    @bikes.count >= DEFAULT_CAPACITY
   end
 
   def empty?
-    @bikes.count < 1 ? true : false
+    @bikes.count < 1
   end
 end

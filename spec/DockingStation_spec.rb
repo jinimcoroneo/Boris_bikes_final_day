@@ -29,8 +29,7 @@ describe DockingStation do
     it 'gets a bike' do
       subject.dock(Bike.new)
       bike = subject.release_bike
-        expect(bike).to be_a_kind_of(Bike)
-        expect(bike).to be_working
+      expect(bike.working).to eq true
     end
   end
 
@@ -52,7 +51,7 @@ describe DockingStation do
     it "allows you to report the bike as broken when you return it" do
       bike = Bike.new
       subject.report_broken(bike)
-      expect(bike.condition).to eq "bad"
+      expect(bike.working).to eq false
     end
   end
 end

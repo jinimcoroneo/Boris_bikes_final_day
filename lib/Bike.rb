@@ -6,4 +6,8 @@ class Bike
     @working = working
   end
 
+  def working?
+    self.working
+  end
+
 end

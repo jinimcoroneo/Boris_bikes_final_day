@@ -2,6 +2,8 @@ require 'DockingStation.rb'
 
 describe DockingStation do
 
+  let(:bike) { double :bike }
+
   describe '#capacity' do
     it 'allows you to set a capacity' do
       station = DockingStation.new(40)
@@ -21,15 +23,16 @@ describe DockingStation do
     end
 
     it 'won\'t release a broken bike' do
-      bike = double(:bike)
-      subject.report_broken(bike)
+      allow(bike).to receive(:working).and_return(false)
+      subject.dock(bike)
       expect{ (subject.release_bike) }.to raise_error "Bike is broken, you can't have it!"
     end
 
     it 'will release a working bike' do
-      subject.dock(double(:bike))
-      bike = subject.release_bike
-      expect(bike.working).to eq true
+      allow(bike).to receive(:working).and_return(true)
+      subject.dock(bike)
+      released_bike = subject.release_bike
+      expect(released_bike.working).to eq true
     end
   end
 
@@ -49,9 +52,9 @@ describe DockingStation do
 
   describe '#report_broken' do
     it "allows you to report the bike as broken when you return it" do
-      bike = double(:bike)
-      subject.report_broken(bike)
-      expect(bike.working).to eq false
+      bike = double(:bike, working: false)
+      allow(bike).to receive(:report_broken).and_return(bike)
+      expect(bike.working).to be(false)
     end
   end
 end

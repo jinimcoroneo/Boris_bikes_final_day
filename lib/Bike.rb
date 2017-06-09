@@ -10,4 +10,13 @@ class Bike
     self.working
   end
 
+  def broken?
+    working? == false
+  end
+
+  def break
+    self.working = false
+    self
+  end
+
 end

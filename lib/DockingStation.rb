@@ -11,7 +11,7 @@ class DockingStation
 
   def release_bike
     fail "There are no more bikes available" if empty?
-    fail "Bike is broken, you can't have it!" if @bikes.first.working == false
+    fail "Bike is broken, you can't have it!" if @bikes.first.broken?
     @bikes.shift
   end
 
@@ -19,12 +19,6 @@ class DockingStation
     fail "The docking station is full" if full?
     @bikes << bike
     @bikes.last
-  end
-
-  def report_broken(bike)
-    dock(bike)
-    bike.working = false
-    bike
   end
 
 private
